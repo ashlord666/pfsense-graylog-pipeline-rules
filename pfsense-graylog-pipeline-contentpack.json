@@ -1,0 +1,517 @@
+{
+  "v": 1,
+  "id": "03ba76ea-3c4d-40ff-a4d3-7fd313cf7d32",
+  "rev": 1,
+  "name": "pfsense-pipeline",
+  "summary": "pfsense-pipeline",
+  "description": "",
+  "vendor": "Ashlord666 <ashlord666@gmail.com>",
+  "url": "https://github.com/ashlord666/pfsense-graylog-pipeline-rules",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "40e06d45-5f33-4a38-89c7-86f5e48b9bc2",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 tcp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 tcp\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,tcp,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"SourcePort\", m[20]);\r\n  set_field(\"DestPort\", m[21]);\r\n  set_field(\"DataLength\", m[22]);\r\n  set_field(\"TCPFlags\", m[23]);\r\n  set_field(\"Sequence\", m[24]);\r\n  set_field(\"ACK\", m[25]);\r\n  set_field(\"Window\", m[26]);\r\n  set_field(\"URG\", m[27]);\r\n  set_field(\"Options\", m[28]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "0d9ae485-65a9-4229-b5e3-46a4535134bb",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 icmp-unreachable"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 icmp-unreachable\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,(unreach|timexceed|paramprob|redirect|maskreply),.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"ICMPType\", m[20]);\r\n  set_field(\"ICMPDesc\", m[21]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "1c9887e6-93fd-4587-878a-0049888c6875",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 icmp-echo"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 icmp-echo\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,(request|reply),.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"ICMPType\", m[17]);\r\n  set_field(\"ICMPID\", m[18]);\r\n  set_field(\"ICMPSeq\", m[19]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a7274e9b-8af7-4474-ae76-6ab5481858de",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 icmp-protocol-unreachable"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 icmp-protocol-unreachable\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,unreachproto,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"ICMPType\", m[17]);\r\n  set_field(\"DestIP\", m[18]);\r\n  set_field(\"ProtocolID\", m[19]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3719f28e-b80f-4ab3-b195-c18194c50dee",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 icmp-tstamp-reply"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 icmp-tstamp-reply\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,tstampreply,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"ICMPType\", m[20]);\r\n  set_field(\"ICMPID\", m[21]);\r\n  set_field(\"ICMPSeq\", m[22]);\r\n  set_field(\"ICMPotime\", m[23]);\r\n  set_field(\"ICMPrtime\", m[24]);\r\n  set_field(\"ICMPttime\", m[25]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "68819302-afad-4067-a1b0-ea82eacea86b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 icmp-tstamp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 icmp-tstamp\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,tstamp,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"ICMPType\", m[17]);\r\n  set_field(\"ICMPID\", m[18]);\r\n  set_field(\"ICMPSeq\", m[19]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "376ddc11-d341-4d73-bbbb-c40f3f430fb2",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 icmp-need-frag"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 icmp-need-frag\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,needfrag,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"ICMPType\", m[17]);\r\n  set_field(\"DestIP\", m[18]);\r\n  set_field(\"MTU\", m[19]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "b6f2b02b-7e57-4032-a2bc-6ffe21fcf2db",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 icmp-need-frag"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 icmp-need-frag\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,needfrag,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"ICMPType\", m[20]);\r\n  set_field(\"DestIP\", m[21]);\r\n  set_field(\"MTU\", m[22]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "fe7b7f7a-b428-4b27-8967-86a8fa1c5002",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 icmp-port-unreachable"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 icmp-port-unreachable\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,unreachport,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"ICMPType\", m[17]);\r\n  set_field(\"DestIP\", m[18]);\r\n  set_field(\"ProtocolID\", m[19]);\r\n  set_field(\"DestPort\", m[20]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "c91da53f-d539-42c1-8d84-f0ae6da3f49f",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 icmp-unreachable"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 icmp-unreachable\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,(unreach|timexceed|paramprob|redirect|maskreply),.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"ICMPType\", m[17]);\r\n  set_field(\"ICMPDesc\", m[18]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a0b89879-1452-4e90-8603-71da0c44b0dd",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 tcp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 tcp\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,tcp,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"SourcePort\", m[17]);\r\n  set_field(\"DestPort\", m[18]);\r\n  set_field(\"DataLength\", m[19]);\r\n  set_field(\"TCPFlags\", m[20]);\r\n  set_field(\"Sequence\", m[21]);\r\n  set_field(\"ACK\", m[22]);\r\n  set_field(\"Window\", m[23]);\r\n  set_field(\"URG\", m[24]);\r\n  set_field(\"Options\", m[25]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d39d2764-1091-4a58-bb3f-563a350df6be",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 icmp-echo"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 icmp-echo\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,(request|reply),.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"ICMPType\", m[20]);\r\n  set_field(\"ICMPID\", m[21]);\r\n  set_field(\"ICMPSeq\", m[22]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3f00c030-ae23-4d42-96a1-f4420e0ce392",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 icmp-port-unreachable"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 icmp-port-unreachable\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,unreachport,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"ICMPType\", m[20]);\r\n  set_field(\"DestIP\", m[21]);\r\n  set_field(\"ProtocolID\", m[22]);\r\n  set_field(\"DestPort\", m[23]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "c3c64b25-3fe1-4d78-8ab8-0f4f0f2ebb59",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 udp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 udp\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,udp,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"SourcePort\", m[17]);\r\n  set_field(\"DestPort\", m[18]);\r\n  set_field(\"DataLength\", m[19]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a331795d-2438-439a-97be-56b14c2d67e5",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 icmp-protocol-unreachable"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 icmp-protocol-unreachable\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,unreachproto,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"ICMPType\", m[20]);\r\n  set_field(\"DestIP\", m[21]);\r\n  set_field(\"ProtocolID\", m[22]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "7c8defd9-295c-410c-ad73-297f77ded281",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv6 icmp-tstamp-reply"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv6 icmp-tstamp-reply\"\r\nwhen\r\n  regex(\"^.*,(in|out),6,.*,tstampreply,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"Class\", m[9]);\r\n  set_field(\"FlowLabel\", m[10]);\r\n  set_field(\"HopLimit\", m[11]);\r\n  set_field(\"Protocol\", m[12]);\r\n  set_field(\"ProtocolID\", m[13]);\r\n  set_field(\"Length\", m[14]);\r\n  set_field(\"SourceIP\", m[15]);\r\n  set_field(\"DestIP\", m[16]);\r\n  set_field(\"ICMPType\", m[17]);\r\n  set_field(\"ICMPID\", m[18]);\r\n  set_field(\"ICMPSeq\", m[19]);\r\n  set_field(\"ICMPotime\", m[20]);\r\n  set_field(\"ICMPrtime\", m[21]);\r\n  set_field(\"ICMPttime\", m[22]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "865d744d-8516-41a1-9958-e10c76099369",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 icmp-tstamp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 icmp-tstamp\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,tstamp,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"ICMPType\", m[20]);\r\n  set_field(\"ICMPID\", m[21]);\r\n  set_field(\"ICMPSeq\", m[22]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "f9ff6680-8e58-4167-a67f-01efb56c6ca2",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfSense-filterlog: ipv4 udp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"pfSense-filterlog: ipv4 udp\"\r\nwhen\r\n  regex(\"^.*,(in|out),4,.*,udp,.*$\", to_string($message.message)).matches == true\r\nthen\r\n  let msg = concat(to_string($message.message), \",0\");\r\n  let m = split(\",\", msg);\r\n  set_field(\"RuleNumber\", m[0]);\r\n  set_field(\"SubRuleNumber\", m[1]);\r\n  set_field(\"Anchor\", m[2]);\r\n  set_field(\"Tracker\", m[3]);\r\n  set_field(\"Interface\", m[4]);\r\n  set_field(\"Reason\", m[5]);\r\n  set_field(\"Action\", m[6]);\r\n  set_field(\"Direction\", m[7]);\r\n  set_field(\"IPVersion\", m[8]);\r\n  set_field(\"TOS\", m[9]);\r\n  set_field(\"ECN\", m[10]);\r\n  set_field(\"TTL\", m[11]);\r\n  set_field(\"ID\", m[12]);\r\n  set_field(\"Offset\", m[13]);\r\n  set_field(\"Flags\", m[14]);\r\n  set_field(\"ProtocolID\", m[15]);\r\n  set_field(\"Protocol\", m[16]);\r\n  set_field(\"Length\", m[17]);\r\n  set_field(\"SourceIP\", m[18]);\r\n  set_field(\"DestIP\", m[19]);\r\n  set_field(\"SourcePort\", m[20]);\r\n  set_field(\"DestPort\", m[21]);\r\n  set_field(\"DataLength\", m[22]);\r\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    }
+  ]
+}
