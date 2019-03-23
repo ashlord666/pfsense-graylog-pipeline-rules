@@ -22,7 +22,7 @@ def genblock(*args):
     
     # common fields
     fields = []
-    regexstring = r'"^.*,.*,.*,.*,.*,.*,.*,(in|out),'
+    regexstring = r'"^.*,(in|out),'
     if 'ipv4' in args:
         regexstring += r'4,'
     elif 'ipv6' in args:
@@ -42,7 +42,6 @@ def genblock(*args):
 
     # ipv4
     if 'ipv4' in args:
-        regexstring += r'.*,.*,.*,.*,.*,.*,.*,.*,'
         fields.append("TOS")
         fields.append("ECN")
         fields.append("TTL")
@@ -54,7 +53,6 @@ def genblock(*args):
     
     # ipv6
     if 'ipv6' in args:
-        regexstring += r'.*,.*,.*,.*,.*,'
         fields.append("Class")
         fields.append("FlowLabel")
         fields.append("HopLimit")
@@ -63,21 +61,23 @@ def genblock(*args):
 
     # ipv4 or ipv6
     if 'ipv4' in args or 'ipv6' in args:
-        regexstring += r'\\d*,.*,.*,'
         fields.append("Length")
         fields.append("SourceIP")
         fields.append("DestIP")
 
     # tcp and udp
-    if 'tcp' in args or 'udp' in args:
-        regexstring += r'\\d*,\\d*,\\d*'
+    if 'udp' in args:
+        regexstring += r'.*,udp,.*'
         fields.append("SourcePort")
         fields.append("DestPort")
         fields.append("DataLength")
 
     # tcp only
     if 'tcp' in args:
-        regexstring += r',.*,.*,.*,.*,.*,.*'
+        regexstring += r'.*,tcp,.*'
+        fields.append("SourcePort")
+        fields.append("DestPort")
+        fields.append("DataLength")
         fields.append("TCPFlags")
         fields.append("Sequence")
         fields.append("ACK")
@@ -87,21 +87,21 @@ def genblock(*args):
 
     # icmp echo request/reply
     if 'icmp-echo' in args:
-        regexstring += r'(request|reply),.*,.*'
+        regexstring += r'.*,(request|reply),.*'
         fields.append("ICMPType")
         fields.append("ICMPID")
         fields.append("ICMPSeq")
 
     # icmp protocol unreachable
     if 'icmp-protocol-unreachable' in args:
-        regexstring += r'unreachproto,.*,.*'
+        regexstring += r'.*,unreachproto,.*'
         fields.append("ICMPType")
         fields.append("DestIP")
         fields.append("ProtocolID")      
 
     # icmp port unreachable
     if 'icmp-port-unreachable' in args:
-        regexstring += r'unreachport,.*,.*,\\d*'
+        regexstring += r'.*,unreachport,.*'
         fields.append("ICMPType")
         fields.append("DestIP")
         fields.append("ProtocolID")   
@@ -109,27 +109,27 @@ def genblock(*args):
 
     # icmp unreachable
     if 'icmp-unreachable' in args:
-        regexstring += r'(unreach|timexceed|paramprob|redirect|maskreply),.*'
+        regexstring += r'.*,(unreach|timexceed|paramprob|redirect|maskreply),.*'
         fields.append("ICMPType")
         fields.append("ICMPDesc")
 
     # icmp need frag
     if 'icmp-need-frag' in args:
-        regexstring += r'needfrag,.*,.*'
+        regexstring += r'.*,needfrag,.*'
         fields.append("ICMPType")
         fields.append("DestIP")
         fields.append("MTU")      
 
     # icmp tstamp
     if 'icmp-tstamp' in args:
-        regexstring += r'tstamp,.*,.*'
+        regexstring += r'.*,tstamp,.*'
         fields.append("ICMPType")
         fields.append("ICMPID")
         fields.append("ICMPSeq")
 
     # icmp tstamp reply
     if 'icmp-tstamp-reply' in args:
-        regexstring += r'tstampreply,.*,.*,.*,.*,.*'
+        regexstring += r'.*,tstampreply,.*'
         fields.append("ICMPType")
         fields.append("ICMPID")
         fields.append("ICMPSeq")
